@@ -1,0 +1,11 @@
+<% if logged_in? %>
+  <%= form_for @post do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+  <%= f.label :content %>
+  <%= f.text_field :content %>
+  <%= f.submit %>
+  <% end %>
+<% else %>
+  <h1>Please sign up, or sign in before posting</h1>
+<% end %>

@@ -1,6 +1,11 @@
 <h1>Register</h1>
 
-<%= form_for @user do |f| %>
+Registration controller
+
+<%= form_for @user, :url => url_for(
+  :controller => 'registrations',
+  :action => 'create') do |f| %>
+
 <%= f.label :email %>
 <%= f.text_field :email %>
 <%= f.label :username %>

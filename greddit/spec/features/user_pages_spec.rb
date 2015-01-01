@@ -2,10 +2,10 @@ require 'rails_helper'
 
 feature "Sign Up Page" do
 
-  scenario "has correct form fields" do
+  scenario "is the correct page" do
     visit new_user_path
 
-    expect(page).to have_content("Register")
+    expect(page).to have_content("email")
   end
 
 end

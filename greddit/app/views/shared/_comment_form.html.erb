@@ -1,0 +1,10 @@
+<%= form_for [@posts,comment],
+:url => url_for(
+  :controller => 'posts',
+  :action => 'create') do |f| %>
+
+<h2>Add A Comment</h2>
+<%= f.text_field :body %>
+<%= hidden_field_tag(:id, @post.id) %>
+<%= f.submit %>
+<% end %>
