@@ -1,6 +1,6 @@
 <ul>
   <% @posts.each do |post| %>
-  <h1>Title: <%= link_to post.title, post_path(post) %></h1>
+  <h1><%= link_to "Title - #{post.title}", post_path(post) %></h1>
   <%= post.title %>
   <% end %>
 </ul>
