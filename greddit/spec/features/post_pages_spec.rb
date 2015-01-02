@@ -52,6 +52,12 @@ def create_post(title = "test",content = "test content")
   click_button 'Create Post'
 end
 
+def create_and_goto_post
+  create_post("test title", "test content")
+  click_link "Title - test title"
+end
+
+
 def add_comment(comment = "test comment")
   fill_in('comment_body', :with => comment)
 
@@ -123,11 +129,6 @@ feature "Show Post Page" do
     expect(page).to have_content("delete comment")
   end
 
-end
-
-def create_and_goto_post
-  create_post("test title", "test content")
-  click_link "Title - test title"
 end
 
 feature "Edit Post Page" do
