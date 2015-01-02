@@ -7,7 +7,11 @@ module ApplicationHelper
   end
 
   def current_user_is_authorized_to_delete(resource)
-    current_user.id == resource.user_id
+    logged_in? && current_user.id == resource.user_id
+  end
+
+  def current_user? (user)
+    logged_in? && current_user == user
   end
 
 end

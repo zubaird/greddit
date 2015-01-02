@@ -98,6 +98,7 @@ feature "Show Post Page" do
 
     expect(page).to have_link 'Delete'
     expect(page).to have_link "Edit"
+    expect(page).to have_content "created by: test-user (you)"
   end
 
   scenario "when user is the NOT post owner" do
@@ -108,6 +109,7 @@ feature "Show Post Page" do
 
     expect(page).to_not have_link "Delete"
     expect(page).to_not have_link "Edit"
+    expect(page).to have_content "created by: test-user"
   end
 
   scenario "it shows all the comments for that post" do
