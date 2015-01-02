@@ -6,8 +6,8 @@ module ApplicationHelper
     end
   end
 
-  def current_user_is_authorized_to_delete(post)
-    current_user.username == post.user.username
+  def current_user_is_authorized_to_delete(resource)
+    current_user.id == resource.user_id
   end
 
 end

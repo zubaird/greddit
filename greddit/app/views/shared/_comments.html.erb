@@ -1,5 +1,12 @@
 <ul>
   <% @post.comments.each do |comment| %>
-  <li><%= comment.body %></li>
-   <% end %>
+    <% if comment.id == nil %>
+      no comments yet, be the first!
+    <% else %>
+      <li><%= comment.body %> <%= " - comment by #{comment.user.username}" unless comment.user == nil %></li>
+      <% if current_user.id == comment.user_id %>
+        <%= link_to 'delete comment', post_comment_path(@post, comment), {method: 'delete', id: "delete-#{comment.id}"} %>
+      <% end %>
+    <% end %>
+  <% end %>
 </ul>

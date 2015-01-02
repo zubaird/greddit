@@ -53,6 +53,7 @@ class PostsController < ApplicationController
     :title,
     :content,
     :id,
+    :user_id,
     )
   end
 

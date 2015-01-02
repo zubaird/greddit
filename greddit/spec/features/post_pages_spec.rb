@@ -40,7 +40,7 @@ def sign_out_user(user = "test-user")
   click_link "sign out - #{user}"
 end
 
-def create_post(title = "test",content = "test content")
+def sign_in_and_create_post(title = "test",content = "test content")
   sign_in_user
 
   visit root_path
@@ -53,7 +53,7 @@ def create_post(title = "test",content = "test content")
 end
 
 def create_and_goto_post
-  create_post("test title", "test content")
+  sign_in_and_create_post("test title", "test content")
   click_link "Title - test title"
 end
 
@@ -82,7 +82,7 @@ feature "New Post Page" do
   end
 
   scenario "when a new post is created" do
-    create_post("test title", "test content")
+    sign_in_and_create_post("test title", "test content")
 
     expect(page).to have_content("test title")
   end
@@ -92,7 +92,7 @@ end
 feature "Show Post Page" do
 
   scenario "when user is the post owner" do
-    create_post("test title", "test content")
+    sign_in_and_create_post("test title", "test content")
 
     click_link "Title - test title"
 
@@ -101,7 +101,7 @@ feature "Show Post Page" do
   end
 
   scenario "when user is the NOT post owner" do
-    create_post("test title", "test content")
+    sign_in_and_create_post("test title", "test content")
 
     sign_out_user
     click_link "Title - test title"
@@ -111,22 +111,24 @@ feature "Show Post Page" do
   end
 
   scenario "it shows all the comments for that post" do
-    create_post("test title", "test content")
-
-    click_link "Title - test title"
+    create_and_goto_post
     add_comment("blah")
 
     expect(page).to have_content("blah")
+    expect(page).to have_content("comment by test-user")
+    expect(page).to have_selector("#delete-#{Comment.first.id}")
   end
 
-  xscenario "only comment owners can delete their own comments" do
-    create_post("test title", "test content")
+  scenario "only comment owners can delete their own comments" do
+    create_and_goto_post
+    add_comment("blah")
+    sign_out_user
+    sign_in_user_alternate
 
     click_link "Title - test title"
-    add_comment("blah")
 
     expect(page).to have_content("blah")
-    expect(page).to have_content("delete comment")
+    expect(page).to_not have_selector("#delete-#{Comment.first.id}")
   end
 
 end
