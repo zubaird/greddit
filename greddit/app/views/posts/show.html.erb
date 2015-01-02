@@ -2,7 +2,10 @@
 <h3>created by: <%= @post.user.username %></h3>
 
 <%= @post.content %>
-<%= link_to 'Delete', post_path(@post), method: 'delete' %>
+<% if current_user_is_authorized_to_delete @post %>
+  <%= link_to 'Delete', post_path(@post), method: 'delete' %>
+  <%= link_to 'Edit', edit_post_path(@post) %>
+<% end %>
 
 <h3>Comments:</h3>
 <%= render 'shared/comments' %>
