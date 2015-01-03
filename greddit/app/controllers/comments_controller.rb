@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
 
-  before_action :authenticate_user, only: [:create,:destroy]
+  before_action :authenticate_user, only: [:create,:destroy, :edit]
 
   def new
     @post = Post.find_by(id: params[:post_id])
@@ -14,6 +14,21 @@ class CommentsController < ApplicationController
       redirect_to post_path(@post)
     else
       render :new
+    end
+  end
+
+  def edit
+    @post = Post.find_by(id: params[:post_id])
+    @comment = Comment.find_by(id: params[:id])
+  end
+
+  def update
+    @post = Post.find_by(id: params[:post_id])
+    @comment = Comment.find_by(id: params[:id])
+    if @comment.update(comment_params)
+      redirect_to post_path(@post), notice: "Comment Updated Successfully"
+    else
+      render :edit
     end
   end
 
