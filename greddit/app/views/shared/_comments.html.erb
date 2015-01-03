@@ -3,11 +3,27 @@
     <% if comment.id == nil %>
       no comments yet, be the first!
     <% else %>
-      <li><%= comment.body %> <%= " - comment by #{comment.user.username}" unless comment.user == nil %></li>
+    <hr>
+      <li><h3><%= comment.body %> <%= " - comment by #{comment.user.username}" unless comment.user == nil %></h3></li>
+
+      <ul>
+        Replies:
+        <% comment.responses.each do |response| %>
+          <li><%= response.body %> <%= " - (response by #{response.user.username})" unless response.user == nil %></li>
+        <% end %>
+      </ul>
+
       <% if current_user_is_authorized_to_delete comment %>
-        <%= link_to 'delete comment', post_comment_path(@post, comment), {method: 'delete', id: "delete-#{comment.id}"} %>
-        <%= link_to 'edit comment', edit_post_comment_path(@post, comment), {id: "edit-#{comment.id}"} %>
+        <%= link_to 'delete comment', post_comment_path(@post, comment), {method: 'delete', id: "delete-#{comment.id}"} %> |
+        <%= link_to 'edit comment', edit_post_comment_path(@post, comment), {id: "edit-#{comment.id}"} %> |
       <% end %>
+
+      <% if logged_in? %>
+
+        <%= link_to 'reply to comment', new_post_comment_response_path(@post, comment)  %>
+
+      <% end %>
+
     <% end %>
   <% end %>
 </ul>

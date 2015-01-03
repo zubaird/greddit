@@ -1,26 +1,26 @@
 <h1><%= @post.title %></h1>
 
 <% if current_user? @post.user %>
-  <h3><%= "created by: #{@post.user.username} (you)"%></h3>
+  <h3><%= "Posted by: #{@post.user.username} (you)"%></h3>
 <% else %>
-  <h3><%= "created by: #{@post.user.username}" %></h3>
+  <h3><%= "Posted by: #{@post.user.username}" %></h3>
 <% end %>
 
 <%= @post.content %>
 <% if current_user_is_authorized_to_delete @post %>
-  <%= link_to 'Delete', post_path(@post), method: 'delete' %>
+  <%= link_to 'Delete', post_path(@post), method: 'delete' %> |
   <%= link_to 'Edit', edit_post_path(@post) %>
 <% end %>
 
-<h3>Comments:</h3>
-<%= render 'shared/comments' %>
-
 <%= form_for ([ @post, @comment]) do |f| %>
-  <h2>Add A Comment</h2>
-  <%= f.text_field :body %>
-  <%= hidden_field_tag(:id, @post.id) %>
-  <% if logged_in? %>
-  <%= hidden_field_tag(:user_id, current_user.id) %>
-  <% end %>
-  <%= f.submit %>
+<h2>Add A Comment</h2>
+<%= f.text_field :body %>
+<%= hidden_field_tag(:id, @post.id) %>
+<% if logged_in? %>
+<%= hidden_field_tag(:user_id, current_user.id) %>
 <% end %>
+<%= f.submit %>
+<% end %>
+<hr>
+<h3>Comments</h3>
+<%= render 'shared/comments' %>

@@ -14,7 +14,9 @@ Rails.application.routes.draw do
   delete 'sign-out' => 'authentications#destroy', as: :signout
 
   resources :posts do
-    resources :comments
+    resources :comments do
+      resources :responses
+    end
   end
 
 

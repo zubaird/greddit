@@ -103,6 +103,16 @@ feature "Comments" do
     expect(page).to have_content("Edit Comment")
     expect(page).to have_title("Greddit")
   end
+
+  scenario "when replying to acomment" do
+    create_and_goto_post
+    add_comment("blah")
+
+    fill_in('comment_reply', :with => "comment reply")
+
+    expect(page).to have_content("comment reply")
+    expect(page).to have_title("Greddit")
+  end
 end
 
 feature "Edit Post Page" do
